@@ -1,0 +1,20 @@
+{
+  "name": "nissi",
+  "version": "1.0.0",
+  "description": "cmms",
+  "license": "ISC",
+  "author": "nissi",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start" : "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.5",
+    "nodemon": "^3.1.9"
+  }
+}
