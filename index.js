@@ -4,7 +4,7 @@ const cors=require('cors')
 const port =3039;
 const router=require('./src/Routes/routes.api')
 app.use(cors({
-  origin: 'https://nissicmms.digidiary.in', 
+  origin:'*', 
   credentials: true,
 }));
 app.use( express.json());
