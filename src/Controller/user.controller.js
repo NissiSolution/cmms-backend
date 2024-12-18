@@ -11,16 +11,18 @@ exports.getUser=(req,res)=>{
     })
 }
 
-exports.setUser=(req,res)=>{
+exports.setUser = (req, res) => {
+    const { name, email, password, role } = req.body;
 
-    
-    const {name,email,password,role}=req.body;
-    const newData=[
-        name,email,password,role
-    ]
-let query='INSERT INTO users (name,email,password,role) values (?,?)'
-    connection.query(query,newData,(err, result) => {
-        if (err) throw err;
-        res.status(201).json('user created' + result);
+    // Parameterized query to prevent SQL injection
+    const query = 'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)';
+    const newData = [name, email, password, role];
+
+    connection.query(query, newData, (err, result) => {
+        if (err) {
+            // Handle error (e.g., duplicate entry, validation issues, etc.)
+            return res.status(500).json({ error: 'Error creating user', details: err });
+        }
+        res.status(201).json({ message: 'User created successfully', result });
     });
-}
+};
