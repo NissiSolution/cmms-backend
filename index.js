@@ -3,6 +3,9 @@ const app=express()
 const cors=require('cors')
 const port =3039;
 const router=require('./src/Routes/routes.api')
+app.use(cors({
+  origin: 'https://nissicmms.digidiary.in', // Allow requests from specific frontend domain
+}));
 app.use(
     cors({
       origin: "*",
