@@ -14,42 +14,44 @@ exports.addAsset = (req, res) => {
     const thumbnail = req.file ? req.file.path : null;
     const newAsset = { name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail };
 
-    if (sku) {
-        // Update the quantity if the SKU exists
-        connection.query(
-            'UPDATE assets SET quantity = quantity + ? WHERE sku = ?',
-            [quantity, sku], // Pass parameters as an array
-            (err, result) => {
-                if (err) {
-                    console.error('Error updating asset:', err);
-                    return res.status(500).json({ error: err.message });
-                }
+    // Check if the SKU already exists in the database
+    connection.query('SELECT * FROM assets WHERE sku = ?', [sku], (err, results) => {
+        if (err) {
+            console.error('Error checking SKU:', err);
+            return res.status(500).json({ error: err.message });
+        }
 
-                // Check if any rows were affected
-                if (result.affectedRows === 0) {
-                    return res.status(404).json({ error: 'Asset with the given SKU not found.' });
-                }
+        if (results.length > 0) {
+            // SKU exists, update the quantity
+            connection.query(
+                'UPDATE assets SET quantity = quantity + ? WHERE sku = ?',
+                [quantity, sku],
+                (err, result) => {
+                    if (err) {
+                        console.error('Error updating asset:', err);
+                        return res.status(500).json({ error: err.message });
+                    }
 
-                // Respond with a success message
-                res.status(200).json({ message: 'Asset quantity updated successfully.', sku });
-            }
-        );
-    } else {
-        // Insert a new asset if SKU is not provided
-        connection.query(
-            'INSERT INTO assets (name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [name, sku, assetTag || null, category || null, model || null, brand || null, serialNumber || null, quantity, thumbnail],
-            (err, result) => {
-                if (err) {
-                    console.error('Error inserting asset:', err);
-                    return res.status(500).json({ error: err.message });
+                    // Respond with a success message
+                    res.status(200).json({ message: 'Asset quantity updated successfully.', sku });
                 }
-                res.status(201).json({ id: result.insertId, ...newAsset });
-            }
-        );
-    }
+            );
+        } else {
+            // SKU does not exist, insert a new asset
+            connection.query(
+                'INSERT INTO assets (name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [name, sku, assetTag || null, category || null, model || null, brand || null, serialNumber || null, quantity, thumbnail],
+                (err, result) => {
+                    if (err) {
+                        console.error('Error inserting asset:', err);
+                        return res.status(500).json({ error: err.message });
+                    }
+                    res.status(201).json({ id: result.insertId, ...newAsset });
+                }
+            );
+        }
+    });
 };
-;
 
 exports.editAsset = (req, res) => {
     const { id } = req.params; // Get the asset ID from the request parameters
