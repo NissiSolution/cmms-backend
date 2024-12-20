@@ -11,7 +11,7 @@ router.post('/emp/post',emp.setEmp)
 
 //work
 
-router.get('/work',work.getWorkOrders)
-router.post('/work',work.addWorkOrder)
+router.get('/work/get',work.getWorkOrders)
+router.post('/work/post',work.addWorkOrder)
 
 module.exports=router
