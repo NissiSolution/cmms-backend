@@ -15,6 +15,7 @@ exports.addAsset = (req, res) => {
 
     const newAsset = { name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail };
 
+    // Using parameterized query to prevent SQL injection
     connection.query(
         'INSERT INTO assets (name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [name, sku, assetTag || null, category || null, model || null, brand || null, serialNumber || null, quantity, thumbnail],
@@ -29,3 +30,4 @@ exports.addAsset = (req, res) => {
         }
     );
 };
+;
