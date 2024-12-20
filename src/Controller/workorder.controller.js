@@ -14,7 +14,7 @@ exports.getWorkOrders = (req, res) => {
 exports.addWorkOrder = (req, res) => {
     const { name, priority, instructions, status, image } = req.body;
 
-    const query = `INSERT INTO work_orders (name, priority, instructions, status, image) VALUES (?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO work_orders (name, priority, instructions, status, assigned,image) VALUES (?, ?, ?, ?, ?)`;
     const data = [name, priority, instructions, status, Buffer.from(image, 'base64')];
 
     connection.query(query, data, (err, result) => {
