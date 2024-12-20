@@ -40,8 +40,11 @@
 
     router.get('/work/get',work.getWorkOrders)
     router.post('/work/post',work.addWorkOrder)
+//assets
 
     router.get('/assets/get', assets.getAssets);
     router.post('/assets/post', upload.single('thumbnail'), assets.addAsset);
+    router.put('/assets/update/:id',assets.editAsset)
+    router.delete('/assets/delete/:id',assets.deleteAsset)
 
     module.exports=router
