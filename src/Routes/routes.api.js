@@ -44,7 +44,7 @@
 
     router.get('/assets/get', assets.getAssets);
     router.post('/assets/post', upload.single('thumbnail'), assets.addAsset);
-    router.put('/assets/update/:id',assets.editAsset)
+    router.put('/assets/update/:id',upload.single('thumbnail'),assets.editAsset)
     router.delete('/assets/delete/:id',assets.deleteAsset)
 
     module.exports=router
