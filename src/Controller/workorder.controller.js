@@ -12,10 +12,10 @@ exports.getWorkOrders = (req, res) => {
 };
 
 exports.addWorkOrder = (req, res) => {
-    const { name, priority, instructions, status, image } = req.body;
+    const { name, priority, instructions, status } = req.body;
 
-    const query = `INSERT INTO work_orders (name, priority, instructions, status, assigned,image) VALUES (?, ?, ?, ?, ?)`;
-    const data = [name, priority, instructions, status, Buffer.from(image, 'base64')];
+    const query = `INSERT INTO work_orders (name, priority, instructions, status, assigned) VALUES (?, ?, ?, ?, ?)`;
+    const data = [name, priority, instructions, status, ];
 
     connection.query(query, data, (err, result) => {
         if (err) {
