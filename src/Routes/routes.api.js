@@ -35,7 +35,9 @@
     //employee
     router.get('/emp/get',emp.getEmp)
     router.post('/emp/post',emp.setEmp)
-
+    router.put('/emp/:id',emp.setEmp)
+    router.post('/emp/atd',emp.markAttendance)
+    router.get('/emp/atd/get',emp.getatd)
     //work
 
     router.get('/work/get',work.getWorkOrders)
