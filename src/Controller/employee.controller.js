@@ -30,14 +30,14 @@ exports.setEmp = (req, res) => {
 
 // Mark attendance for an employee
 exports.markAttendance = (req, res) => {
-    const { employeeId, status } = req.body;
+    const { employee_Id, status } = req.body;
 
-    if (!employeeId || !status) {
+    if (!employee_Id || !status) {
         return res.status(400).json({ error: 'Employee ID and status are required' });
     }
 
-    const query = 'INSERT INTO attendance (employee_id, status, date) VALUES (?, ?, NOW())';
-    const data = [employeeId, status];
+    const query = 'INSERT INTO attendance (employee_Id, status, date) VALUES (?, ?, NOW())';
+    const data = [employee_Id, status];
 
     connection.query(query, data, (err, result) => {
         if (err) {
