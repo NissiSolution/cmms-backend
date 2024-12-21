@@ -42,6 +42,7 @@
 
     router.get('/work/get',work.getWorkOrders)
     router.post('/work/post',work.addWorkOrder)
+    router.put('/work/update',work.updateWorkOrder)
 //assets
 
     router.get('/assets/get', assets.getAssets);
