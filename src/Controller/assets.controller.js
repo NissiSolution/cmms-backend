@@ -58,18 +58,65 @@ exports.editAsset = (req, res) => {
     const { name, sku, assetTag, category, model, brand, serialNumber, quantity } = req.body;
     const thumbnail = req.file ? req.file.path : null;
 
-    const sql = 'UPDATE assets SET name = ?, sku = ?, assetTag = ?, category = ?, model = ?, brand = ?, serialNumber = ?, quantity = ?, thumbnail = ? WHERE id = ?';
-    connection.query(sql, [name, sku, assetTag, category, model, brand, serialNumber, quantity, thumbnail, id], (err, result) => {
-        if (err) {
-            console.error('Error updating asset:', err);
-            return res.status(500).json({ error: err.message });
+    // Fetch the current asset data
+    const selectQuery = 'SELECT * FROM assets WHERE id = ?';
+    connection.query(selectQuery, [id], (selectErr, results) => {
+        if (selectErr) {
+            console.error('Error fetching asset:', selectErr);
+            return res.status(500).json({ error: 'Error fetching asset.' });
         }
 
-        if (result.affectedRows === 0) {
+        if (results.length === 0) {
             return res.status(404).json({ error: 'Asset not found.' });
         }
 
-        res.status(200).json({ message: 'Asset updated successfully.' });
+        const currentAsset = results[0];
+
+        // Prepare the updated data
+        const updatedData = {
+            name: name || currentAsset.name,
+            sku: sku || currentAsset.sku,
+            assetTag: assetTag || currentAsset.assetTag,
+            category: category || currentAsset.category,
+            model: model || currentAsset.model,
+            brand: brand || currentAsset.brand,
+            serialNumber: serialNumber || currentAsset.serialNumber,
+            quantity: quantity !== undefined ? quantity : currentAsset.quantity,
+            thumbnail: thumbnail || currentAsset.thumbnail,
+        };
+
+        // Update the asset in the database
+        const updateQuery = `
+            UPDATE assets 
+            SET name = ?, sku = ?, assetTag = ?, category = ?, model = ?, brand = ?, serialNumber = ?, quantity = ?, thumbnail = ? 
+            WHERE id = ?
+        `;
+        connection.query(updateQuery, [
+            updatedData.name,
+            updatedData.sku,
+            updatedData.assetTag,
+            updatedData.category,
+            updatedData.model,
+            updatedData.brand,
+            updatedData.serialNumber,
+            updatedData.quantity,
+            updatedData.thumbnail,
+            id,
+        ], (updateErr, result) => {
+            if (updateErr) {
+                console.error('Error updating asset:', updateErr);
+                return res.status(500).json({ error: 'Error updating asset.' });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ error: 'Asset not found.' });
+            }
+
+            res.status(200).json({
+                message: 'Asset updated successfully.',
+                updatedAsset: updatedData,
+            });
+        });
     });
 };
 
