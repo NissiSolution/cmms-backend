@@ -5,6 +5,7 @@
     const work=require('../Controller/workorder.controller')
     const vendor=require('../Controller/vendor.controller')
     const multer = require('multer');
+    const remark=require('../Controller/remarks.controller')
 
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
@@ -48,7 +49,11 @@
     router.put('/assets/update/:id',upload.single('thumbnail'),assets.editAsset)
     router.delete('/assets/delete/:id',assets.deleteAsset)
 //vendor
-   router.get('/vendor/get',vendor.getVendors)
-   router.post('/vendor/post',vendor.addVendor)
-   router.delete('/vendor/dlt/:id',vendor.deleteVendor)
+   router.get('/vendors/get',vendor.getVendors)
+   router.post('/vendors/post',vendor.addVendor)
+   router.delete('/vendors/dlt/:id',vendor.deleteVendor)
+
+
+   router.get('/remark',remark.addRemarks)
+   router.post('/remark/get',remark.getRemarks)
     module.exports=router
