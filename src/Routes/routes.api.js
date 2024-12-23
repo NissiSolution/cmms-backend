@@ -3,6 +3,7 @@
     const user=require('../Controller/user.controller')
     const emp=require('../Controller/employee.controller')
     const work=require('../Controller/workorder.controller')
+    const vendor=require('../Controller/vendor.controller')
     const multer = require('multer');
 
     const storage = multer.diskStorage({
@@ -13,7 +14,6 @@
             cb(null, Date.now() + '-' + file.originalname);
         },
     });
-
     const fileFilter = (req, file, cb) => {
         const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (allowedMimeTypes.includes(file.mimetype)) {
@@ -22,13 +22,11 @@
             cb(new Error('Invalid file type!'), false);
         }
     };
-
     const upload = multer({
         storage,
         limits: { fileSize: 1024 * 1024 * 5 }, // 5MB limit
         fileFilter,
     });
-
     const assets=require('../Controller/assets.controller')
     router.get('/get',user.getUser)
     router.post('/post',user.setUser)
@@ -49,5 +47,8 @@
     router.post('/assets/post', upload.single('thumbnail'), assets.addAsset);
     router.put('/assets/update/:id',upload.single('thumbnail'),assets.editAsset)
     router.delete('/assets/delete/:id',assets.deleteAsset)
-
+//vendor
+   router.get('/vendor/get',vendor.getVendors)
+   router.post('/vendor/post',vendor.addVendor)
+   router.delete('/vendor/dlt/:id',vendor.deleteVendor)
     module.exports=router
