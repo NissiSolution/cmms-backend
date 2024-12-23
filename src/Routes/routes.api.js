@@ -54,6 +54,6 @@
    router.delete('/vendors/dlt/:id',vendor.deleteVendor)
 
 
-   router.get('/remark',remark.addRemarks)
-   router.post('/remark/get',remark.getRemarks)
+   router.post('/remark',remark.addRemarks)
+   router.get('/remark/get',remark.getRemarks)
     module.exports=router
