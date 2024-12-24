@@ -56,4 +56,5 @@
 
    router.post('/remark',remark.addRemarks)
    router.get('/remark/get',remark.getRemarks)
+   router.delete('/remark/:id',remark.deleteRemark)
     module.exports=router

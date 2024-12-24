@@ -19,3 +19,19 @@ exports.addRemarks=(req,res)=>{
     });
     
 }
+
+
+exports.deleteRemark = (req, res) => {
+    const { id } = req.params; // Get the ID from the request parameters
+
+    const query = 'DELETE FROM remarks WHERE id = ?'; // SQL query to delete the remark
+    connection.query(query, [id], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to delete remark', details: err });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Remark not found' });
+        }
+        res.status(200).json({ message: 'Remark deleted successfully' });
+    });
+};
