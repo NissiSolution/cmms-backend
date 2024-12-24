@@ -48,6 +48,7 @@
     router.post('/assets/post', upload.single('thumbnail'), assets.addAsset);
     router.put('/assets/update/:id',upload.single('thumbnail'),assets.editAsset)
     router.delete('/assets/delete/:id',assets.deleteAsset)
+    router.get('/assets/get/:id',assets.getAssetById)
 //vendor
    router.get('/vendors/get',vendor.getVendors)
    router.post('/vendors/post',vendor.addVendor)

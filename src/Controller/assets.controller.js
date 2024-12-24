@@ -138,3 +138,21 @@ exports.deleteAsset = (req, res) => {
         res.status(200).json({ message: 'Asset deleted successfully.' });
     });
 };
+
+exports.getAssetById = (req, res) => {
+    const { id } = req.params; // Get the asset ID from the request parameters
+
+    const query = 'SELECT * FROM assets WHERE id = ?';
+    connection.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error fetching asset:', err);
+            return res.status(500).json({ error: 'Error fetching asset.' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Asset not found.' });
+        }
+
+        res.status(200).json(results[0]); // Return the asset data
+    });
+};
