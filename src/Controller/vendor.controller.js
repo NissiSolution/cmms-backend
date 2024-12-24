@@ -16,8 +16,8 @@ exports.getVendors = (req, res) => {
 exports.addVendor = (req, res) => {
     const { vendor_id,contactperson,name, email, phone,address } = req.body;
 
-    const query = 'INSERT INTO vendors (vendor_id,contactperson,name,email, phone,address) VALUES (?, ?, ?,?,?,?)';
-    const data = [name, email, phone,vendor_id,contactperson,address];
+    const query = 'INSERT INTO vendors (vendor_id,name,contactperson,email, phone,address) VALUES (?, ?, ?,?,?,?)';
+    const data = [vendor_id,name,contactperson, email, phone,address];
 
     connection.query(query, data, (err, result) => {
         if (err) {
