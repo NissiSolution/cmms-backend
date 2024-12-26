@@ -31,6 +31,7 @@
     const assets=require('../Controller/assets.controller')
     router.get('/get',user.getUser)
     router.post('/post',user.setUser)
+    router.put('/pass/:id',user.updatePassword)
     //employee
     router.get('/emp/get',emp.getEmp)
     router.post('/emp/post',emp.setEmp)
