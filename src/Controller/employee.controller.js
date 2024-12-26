@@ -14,10 +14,10 @@ exports.getEmp = (req, res) => {
 
 // Add a new employee
 exports.setEmp = (req, res) => {
-    const { name,emp_id, department,dateofjoin, skillset, email, phone } = req.body;
+    const { name,emp_id, department,dateofjoin, skillset, email,password, phone } = req.body;
 
-    const query = 'INSERT INTO employee (emp_id,name, department, dateofjoin,skillset, email, phone) VALUES (?,?, ?,?, ?, ?, ?)';
-    const data = [emp_id ,name,department,dateofjoin, skillset, email, phone];
+    const query = 'INSERT INTO employee (emp_id,name, department, dateofjoin,skillset, email, phone,password) VALUES (?,?, ?,?, ?, ?, ?,?)';
+    const data = [emp_id ,name,department,dateofjoin, skillset, email, phone,password];
 
     connection.query(query, data, (err, result) => {
         if (err) {
