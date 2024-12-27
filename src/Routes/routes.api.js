@@ -64,6 +64,6 @@
 
    //roles
    router.post('/roles/post',role.addRole)
-   router.get('/roles',role.addRole)
+   router.get('/roles',role.getRoles)
    router.delete('/roles/:id',role.deleteRole)
     module.exports=router
