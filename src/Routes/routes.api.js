@@ -6,6 +6,7 @@
     const vendor=require('../Controller/vendor.controller')
     const multer = require('multer');
     const remark=require('../Controller/remarks.controller')
+    const role=require('../Controller/roles.controller')
 
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
@@ -59,4 +60,10 @@
    router.post('/remark',remark.addRemarks)
    router.get('/remark/get',remark.getRemarks)
    router.delete('/remark/:id',remark.deleteRemark)
+
+
+   //roles
+   router.post('/roles/post',role.addRole)
+   router.get('/roles',role.addRole)
+   router.delete('/roles/:id',role.deleteRole)
     module.exports=router
