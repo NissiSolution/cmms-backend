@@ -7,7 +7,7 @@
     const multer = require('multer');
     const remark=require('../Controller/remarks.controller')
     const role=require('../Controller/roles.controller')
-
+    const locations=require('../Controller/location.controller')
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, './uploads/'); // Ensure this path exists
@@ -66,4 +66,11 @@
    router.post('/roles/post',role.addRole)
    router.get('/roles',role.getRoles)
    router.delete('/roles/:id',role.deleteRole)
+
+
+   router.get('/location', locations.getLocations);
+router.post('/location/post', locations.addLocation);
+router.put('/locations/:id', locations.updateLocation);
+router.delete('/locations/dlt/:id', locations.deleteLocation);
+
     module.exports=router
