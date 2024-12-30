@@ -5,7 +5,9 @@ const mysql = require('mysql');
   host:'82.180.167.34',
   user:'u540105965_nissicmms',             // Replace with your MySQL username
   password:'R5w]e!Aiaa$Y',             // Replace with your MySQL password
-  database:'u540105965_nissicmms',       // Replace with your database name
+  database:'u540105965_nissicmms',
+  connectionLimit: 0, // Set appropriate connection limits
+  queueLimit: 0,       // Replace with your database name
 });
 
 connection.connect((error) => {
