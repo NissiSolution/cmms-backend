@@ -33,6 +33,7 @@
     router.get('/get',user.getUser)
     router.post('/post',user.setUser)
     router.put('/pass/:id',user.updatePassword)
+    router.put('/users/:id',user.updateUserProfile)
     //employee
     router.get('/emp/get',emp.getEmp)
     router.post('/emp/post',emp.setEmp)
